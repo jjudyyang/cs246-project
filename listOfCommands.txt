@@ -1,0 +1,17 @@
+List of Commands for Reference
+
+left
+right
+down
+clockwise
+counterclockwise
+drop
+levelup
+leveldown
+norandom
+random
+sequence
+I
+J
+L
+restart
