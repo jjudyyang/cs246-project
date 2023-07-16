@@ -10,6 +10,7 @@ TrieNode::TrieNode(): fullCommand{""}, letters(new TrieNode*[26]){
     }
 }
 
+//destructors 
 TrieNode::~TrieNode(){
     if( letters != nullptr ){
        for(int i = 0; i < 26; ++i){
@@ -18,6 +19,8 @@ TrieNode::~TrieNode(){
     }
     delete[] letters;
 }
+
+// ---------------- MEMBER FUNCTIONS --------------------
 void TrieNode::insert(const string& word){
     cout<<"adding "<<word<<endl;
     TrieNode* current = this;
@@ -44,6 +47,7 @@ void TrieNode::insert(const string& word){
 //check if "word" is valid prefix!
 string TrieNode::search(const string& word){
     TrieNode* current = this;
+
     //traverse the tree to see if word corresponds to a command
     for( char c : word){
         int index = c - 'a';
@@ -57,7 +61,8 @@ string TrieNode::search(const string& word){
         }
     }
 
-    //if it gets to the end of the word and not return command
+    //if it gets to the end of the word, return the command
+    //either going to be correct command or "MUTIPLE" -- should be error
     return current->fullCommand;
 }
 
