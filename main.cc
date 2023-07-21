@@ -9,7 +9,6 @@
 using namespace std;
 
 // String of current commands
-// new commands can be added, or removed ( need to modify command while loop for new commands)
 vector<string> validCommands = {
   "left",
   "right",
@@ -47,27 +46,48 @@ int main () {
     commands->insert(validCommands[i]); //add each command to tree
   }
 
-  //process the commands
+  //process the commands 
   string input;
+  
+  //render empty board
+
   cout<<"input command: ";
-  while( getline (cin, input)){
-    //check if there is a multiplier 
-    auto result = seperateStringFromInt(input);
-    cout<<"int "<<result.first<<endl;
-    cout<<"str "<<result.second<<endl;
+  while( getline (cin, input) ){
+    //convert input to stream for mutiple commands 
+    stringstream ss{input};
+    vector<string> commandsVector;
+    string temp;
+    while( ss >> temp){
+      commandsVector.push_back(temp);
+    }
 
-    cout<<"full command: "<<commands->search(result.second)<<endl;
+    for(int i = 0; i < commandsVector.size(); ++i){
+      string command = commandsVector[i];
+      auto result = seperateStringFromInt(command);
+      int multi = result.first;
+      string fullCommand = commands->search(result.second);
+      
+      //do the thing 
+      if(fullCommand == "drop"){
+        
+      //use levels to generate next block 
+      }else if(fullCommand == "left"){
 
-    //DO WHATEVER WITH COMMANDS HERE
-    // #############################
-    // #############################
-    // #############################
-    // #############################
-    // #############################
+      }else if(fullCommand == "right"){
 
-  }
+      }else if(fullCommand == "down"){
+
+      }
+
+      //render board
+    }
+
+    
+
   
 
-  //deallocate 
+  }
+
+  //deallocate commands
   delete commands; 
 }
