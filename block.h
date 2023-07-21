@@ -7,7 +7,7 @@ class Block {
     int pos_y;
     int orientation;
  public:
-   virtual ~Block();
+   ~Block();
    virtual void rotateClockwise() = 0;
    virtual void rotateCounterClockwise() = 0;
    virtual void moveLeft() = 0;

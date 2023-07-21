@@ -4,6 +4,7 @@
 #include <vector>
 #include "board.h"
 #include "blank.h"
+#include "textdisplay.h"
 #include "commandInterpreter.h"
 
 using namespace std;
@@ -41,7 +42,17 @@ pair<int, string> seperateStringFromInt (const string &input){
 }
 
 int main () {
-  
+  int cols = 11;
+  int rows = 15;
+  vector<vector<char>> matrix1(rows, vector<char>(cols));
+  vector<vector<char>> matrix2(rows, vector<char>(cols));
+
+  Board gameBoard1{matrix1};
+  Board gameBoard2{matrix2};
+  TextDisplay * ob = new TextDisplay(&gameBoard1, &gameBoard2);
+  gameBoard1.attach(ob);
+  gameBoard1.render();
+  gameBoard2.attach(ob);
   TrieNode *commands = new TrieNode; //create new command tree with given vector of commands
   for(int i = 0; i < validCommands.size(); ++i){
     commands->insert(validCommands[i]); //add each command to tree
@@ -53,10 +64,10 @@ int main () {
   while( getline (cin, input)){
     //check if there is a multiplier 
     auto result = seperateStringFromInt(input);
-    cout<<"int "<<result.first<<endl;
-    cout<<"str "<<result.second<<endl;
+    //cout<<"int "<<result.first<<endl;
+    //cout<<"str "<<result.second<<endl;
 
-    cout<<"full command: "<<commands->search(result.second)<<endl;
+    //cout<<"full command: "<<commands->search(result.second)<<endl;
 
     //DO WHATEVER WITH COMMANDS HERE
     // #############################
@@ -64,7 +75,6 @@ int main () {
     // #############################
     // #############################
     // #############################
-
   }
   
 
