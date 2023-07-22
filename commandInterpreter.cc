@@ -22,7 +22,7 @@ TrieNode::~TrieNode(){
 
 // ---------------- MEMBER FUNCTIONS --------------------
 void TrieNode::insert(const string& word){
-    cout<<"adding "<<word<<endl;
+   //cout<<"adding "<<word<<endl;
     TrieNode* current = this;
 
     //add the command to tree
@@ -65,6 +65,10 @@ string TrieNode::search(const string& word){
     //either going to be correct command or "MUTIPLE" -- should be error
     return current->fullCommand;
 }
+
+//function to seperate string from int
+
+//transplant from main!
 
 
 

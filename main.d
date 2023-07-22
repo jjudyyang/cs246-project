@@ -1,1 +1,1 @@
-main.o: main.cc board.h blank.h commandInterpreter.h
+main.o: main.cc functions.h commandInterpreter.h

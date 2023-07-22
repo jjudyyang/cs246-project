@@ -15,3 +15,24 @@ I
 J
 L
 restart
+
+
+//testing the command line interpreter 
+
+text
+seed
+scriptfile1
+scriptfiel2
+startlevel
+
+
+//testing suite 
+
+./judy text seed 100 scriptfile1 text.txt scriptfile2 text2.txt startlevel 2 
+
+Game Instructions:
+text
+seed
+scriptfile1
+scriptfiel2
+startlevel
