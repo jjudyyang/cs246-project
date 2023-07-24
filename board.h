@@ -5,6 +5,9 @@
 
 class Block;
 
+const int BOARD_HEIGHT = 18;
+const int BOARD_WIDTH = 11;
+
 class Board: public Subject {
   Block *theBlock;
   int level = 0;
@@ -17,7 +20,7 @@ class Board: public Subject {
   void restart();
   void render();
   char getState(int row, int col) const override;
-
+  
   ~Board();
 };
 
