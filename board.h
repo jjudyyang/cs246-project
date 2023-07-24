@@ -1,26 +1,33 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <iostream>
+#include <vector>
+#include <block.h>
 #include "subject.h"
 
-class Block;
+using namespace std;
 
-const int BOARD_HEIGHT = 18;
-const int BOARD_WIDTH = 11;
+class Block;
+struct Coord;
 
 class Board: public Subject {
   Block *theBlock;
   int level = 0;
+  int score = 0;
+  vector<vector<char>> matrix;
  public:
-  explicit Board(Block *block): theBlock{block} {}
+  explicit Board(vector<vector<char>> matrix);
 
   Block *&block() { return theBlock; }
   void levelup();
   void leveldown();
   void restart();
   void render();
+  int getLevel();
+  int getScore();
   char getState(int row, int col) const override;
-  
+  void drop();
+
   ~Board();
 };
 
