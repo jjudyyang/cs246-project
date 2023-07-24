@@ -66,5 +66,9 @@ string TrieNode::search(const string& word){
     return current->fullCommand;
 }
 
+//function to seperate string from int
+
+//transplant from main!
+
 
 

@@ -1,12 +1,10 @@
-# Judy made a makefile for testing the command interpreter
-
 ########## Variables ##########
 
 CXX = g++					# compiler
 CXXFLAGS = -g -Wall -MMD -Werror=vla -std=c++20 			# compiler flags
 MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
 
-OBJECTS = commandInterpreter.o main.o subject.o textdisplay.o board.o			# object files forming executable
+OBJECTS = functions.o commandInterpreter.o subject.o textdisplay.o board.o main.o  			# object files forming executable
 DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"
 EXEC = judy				# executable name
 
@@ -26,3 +24,25 @@ ${OBJECTS} : ${MAKEFILE_NAME}			# OPTIONAL : changes to this file => recompile
 clean :						# remove files that can be regenerated
 	rm -f ${DEPENDS} ${OBJECTS} ${EXEC}
 	
+
+########## Command Line Arugments ##########
+
+##idk how to make it run by default without having to type default
+
+# a: ${EXEC}
+# 	./${EXEC} a
+
+# text: ${EXEC}
+# 	./${EXEC} -text
+
+# seed: ${EXEC}
+# 	./${EXEC} -seed xxx
+
+# scriptfile1: ${EXEC}
+# 	./${EXEC} -scriptfile1 xxx
+
+# scriptfile2: ${EXEC}
+# 	./${EXEC} -scriptfile2 xxx
+
+# startlevel: ${EXEC}
+# 	./${EXEC} -startlevel 

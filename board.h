@@ -2,6 +2,8 @@
 #define BOARD_H
 #include <iostream>
 #include <vector>
+#include "block.h"
+#include "levels.h"
 #include "subject.h"
 
 using namespace std;

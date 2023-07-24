@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include "functions.h"
 #include "board.h"
 #include "blank.h"
 #include "textdisplay.h"
@@ -9,7 +10,7 @@
 
 using namespace std;
 
-// String of current commands
+//String of current commands
 vector<string> validCommands = {
   "left",
   "right",
@@ -26,21 +27,22 @@ vector<string> validCommands = {
   "hint"
 };
 
-pair<int, string> seperateStringFromInt (const string &input){
-  stringstream ss(input);
-  string str;
-  int num;
-  ss >> num;
-  if( ss.fail() ){
-    num = 0;
-    str = input;
-  }else{
-    getline(ss >> ws, str);
-  }
-  return make_pair(num, str);
-}
 
-int main () {
+int main ( int argc, char* argv[]) {
+
+//---------------- process command line arguemnts ------------------
+
+//Default Game Parameters 
+  bool text = false; 
+  int seed = 0;
+  string scriptfile1 = "";
+  string scriptfile2 = ""; 
+  int startlevel = 0;
+  //process Game Paramters
+  processGameParameters(argc, argv, text, seed, scriptfile1, scriptfile2, startlevel);
+  //display Game Parameters
+  prettyPrintGameParameters(text, seed, scriptfile1, scriptfile2, startlevel);
+  
   int cols = 11;
   int rows = 15;
   vector<vector<char>> matrix1(rows, vector<char>(cols));
@@ -57,13 +59,14 @@ int main () {
     commands->insert(validCommands[i]); //add each command to tree
   }
 
-  //process the commands 
+  //---------------- process player commands ------------------
+  //NEED TO DO ELSEWHERE
   string input;
   
   //render empty board
 
-  cout<<"input command: ";
- while( getline (cin, input) ){
+   cout<<"begin inputing commands"<<endl;
+  while( getline (cin, input) ){
     //convert input to stream for mutiple commands 
     stringstream ss{input};
     vector<string> commandsVector;
@@ -72,34 +75,25 @@ int main () {
       commandsVector.push_back(temp);
     }
 
-    for(int i = 0; i < commandsVector.size(); ++i){
-      string command = commandsVector[i];
-      auto result = seperateStringFromInt(command);
-      int multi = result.first;
-      string fullCommand = commands->search(result.second);
-      
-      //do the thing 
-      if(fullCommand == "drop"){
-        
-      //use levels to generate next block 
-      }else if(fullCommand == "left"){
+      for(int i = 0; i < commandsVector.size(); ++i){
+        string command = commandsVector[i];
+        auto result = seperateStringFromInt(command);
+        //int multi = result.first;
+        string fullCommand = commands->search(result.second);
 
-      }else if(fullCommand == "right"){
+        //should also output player
+        cout<<"full command: "<<fullCommand<<endl; //this is feedback for the command
 
-      }else if(fullCommand == "down"){
+        //update score 
+        //render board from the commands
+        //ie  clear lines, display score 
 
-      }
+        //special actions 
+        //if speical actions happen, render board again  
 
-      //render board
     }
 
-    
-
-  
-
-  }
-  
-
-  //deallocate 
+  //deallocate commands
   delete commands; 
+  }
 }
