@@ -1,4 +1,5 @@
 #include "board.h"
+#include "block.h"
 #include <vector>
 
 Board::Board( vector<vector<char>> matrix): matrix{matrix} {}
@@ -14,7 +15,11 @@ void Board::leveldown() {
 }
 
 void Board::restart() {
-    return;
+    for (int row = 0; row < 15; row++) {
+        for (int col = 0; col < 11; col++) {
+            matrix[row][col] = ' ';
+        }
+    }
 }
 
 void Board::render() {
@@ -31,4 +36,11 @@ int Board::getScore() {
 
 char Board::getState(int row, int col) const {
     return matrix[row][col];
+}
+
+void Board::drop() {
+    vector<Coord> block = theBlock->blockCoords();
+    for (Coord blockPos : block) {
+        matrix[blockPos.x][blockPos.y] = theBlock->blockType();
+    }
 }
