@@ -22,7 +22,7 @@ TrieNode::~TrieNode(){
 
 // ---------------- MEMBER FUNCTIONS --------------------
 void TrieNode::insert(const string& word){
-   //cout<<"adding "<<word<<endl;
+    //cout<<"adding "<<word<<endl;
     TrieNode* current = this;
 
     //add the command to tree
