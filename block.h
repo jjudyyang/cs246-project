@@ -1,6 +1,7 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 #include <iostream>
+#include <vector>
 
 using namespace std;
 

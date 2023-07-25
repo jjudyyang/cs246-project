@@ -2,7 +2,7 @@
 #define BOARD_H
 #include <iostream>
 #include <vector>
-#include <block.h>
+#include "block.h"
 #include "subject.h"
 
 using namespace std;
