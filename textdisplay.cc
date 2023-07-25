@@ -29,7 +29,9 @@ void TextDisplay::notify() {
         cout << "-";
     }
 
-    for (int row = 0; row < 15; row++) {
+    cout << endl;
+
+    for (int row = 0; row < 18; row++) {
         for (int col = 0; col < 11; col++) {
             cout << board1->getState(row, col);
         }

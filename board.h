@@ -17,9 +17,9 @@ class Board: public Subject {
   Block *theBlock;
   int level = 0;
   int score = 0;
-  vector<vector<char>> matrix;
+  vector<vector<char>> &matrix;
  public:
-  explicit Board(vector<vector<char>> matrix);
+  explicit Board(vector<vector<char>> &matrix);
 
   Block *&block() { return theBlock; }
   void levelup();
@@ -30,6 +30,7 @@ class Board: public Subject {
   int getScore();
   char getState(int row, int col) const override;
   void drop();
+  void lift();
 
   ~Board();
 };

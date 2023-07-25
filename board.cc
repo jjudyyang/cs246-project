@@ -2,7 +2,13 @@
 #include "block.h"
 #include <vector>
 
-Board::Board( vector<vector<char>> matrix): matrix{matrix} {}
+Board::Board(vector<vector<char>> &matrix): matrix{matrix} {
+    for (int row = 0; row < BOARD_HEIGHT; row++) {
+        for (int col = 0; col < BOARD_WIDTH; col++) {
+            matrix[row][col] = ' ';
+        }
+    }
+}
 
 Board::~Board() {}
 
@@ -15,8 +21,8 @@ void Board::leveldown() {
 }
 
 void Board::restart() {
-    for (int row = 0; row < 15; row++) {
-        for (int col = 0; col < 11; col++) {
+    for (int row = 0; row < BOARD_HEIGHT; row++) {
+        for (int col = 0; col < BOARD_WIDTH; col++) {
             matrix[row][col] = ' ';
         }
     }
@@ -39,8 +45,17 @@ char Board::getState(int row, int col) const {
 }
 
 void Board::drop() {
-    vector<Coord> block = theBlock->blockCoords();
-    for (Coord blockPos : block) {
-        matrix[blockPos.x][blockPos.y] = theBlock->blockType();
+    vector<Coord> blockSquares = theBlock->blockCoords();
+    for (Coord blockPos : blockSquares) {
+        cout << "x: " << blockPos.x << endl;
+        cout << "y: " << blockPos.y << endl;
+        matrix[blockPos.y][blockPos.x] = theBlock->blockType();
+    }
+}
+
+void Board::lift() {
+    vector<Coord> blockSquares = theBlock->blockCoords();
+    for (Coord blockPos : blockSquares) {
+        matrix[blockPos.y][blockPos.x] = ' ';
     }
 }
