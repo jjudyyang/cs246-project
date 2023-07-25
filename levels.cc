@@ -1,38 +1,63 @@
-//abstract base class that defines the command interface for selecting the next block
-class Level{
-    public:
-        virtual Block* getNextBlock(); // returning next block
+#include "levels.h"
+#include "board.h"
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
 
-};
 
-//read in blocks from from sequence files 
-class level0: public Level{
 
+void Level::addToInputSequence(vector<string> &input){
+    string input = theBoard->getInputSequence();
+    ifstream MyFile{input};
+    string s;
+    while ( getline(MyFile, s) ){
+        input.push_back(s);
+    }
+}
+
+
+Block* Level0::nextBlock() const{
+    string block = input[0];
+    input.erase(input.begin());
+    input.push_back(block);
+
+    if(block == "I"){
+        I * nextBlock = new I;
+        return nextBlock;  
+    }else if(block == "J" ){
+        J * nextBlock = new J;
+        return nextBlock;  
+    }else if(block == "L" ){
+        L * nextBlock = new L;
+        return nextBlock;  
+    }else if(block == "O" ){
+        O * nextBlock = new O;
+        return nextBlock;  
+    }else if(block == "Z" ){
+        Z * nextBlock = new Z;
+        return nextBlock;  
+    }else if(block == "T" ){
+        T * nextBlock = new T;
+        return nextBlock;  
+    }else if(block == "S" ){
+        S * nextBlock = new S;
+        return nextBlock;  
+    }
+
+}
+Block* Level1::nextBlock() const{
     
+}
 
-};
-
-//similar to level 2, except using 6 blocks instead of 7 and if it lands on block that 
-//represents S or Z then we generate random number again to select from the two
-class level1: public Level{
-
-
+Block* Level2::nextBlock() const{
     
-};
+}
 
-
-//all blocks selected equally (7 blocks, generate random number, mod by 7, gives us block )
-class level2: public Level{
-
+Block* Level3::nextBlock() const{
     
-};
-
-
-class level3: public Level{
-
+}
+Block* Level4::nextBlock() const{
     
-};
+}
 
-class level4: public Level{
-    
-};

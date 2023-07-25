@@ -6,7 +6,7 @@ MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
 
 OBJECTS = functions.o commandInterpreter.o main.o board.o block.o subject.o textdisplay.o			# object files forming executable
 DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"
-EXEC = judy				# executable name
+EXEC = run				# executable name
 
 ########## Targets ##########
 

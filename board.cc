@@ -2,12 +2,14 @@
 #include "block.h"
 #include <vector>
 
-Board::Board(vector<vector<char>> &matrix): matrix{matrix} {
+Board::Board(vector<vector<char>> &matrix, int level): matrix{matrix} {
+
     for (int row = 0; row < BOARD_HEIGHT; row++) {
         for (int col = 0; col < BOARD_WIDTH; col++) {
             matrix[row][col] = ' ';
         }
     }
+    
 }
 
 Board::~Board() {}
@@ -59,3 +61,11 @@ void Board::lift() {
         matrix[blockPos.y][blockPos.x] = ' ';
     }
 }
+
+string Board::getInputSequence(){
+    return inputSequence;
+}
+
+int Board::getSeed(){
+    return seed;
+} 

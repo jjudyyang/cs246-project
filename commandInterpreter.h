@@ -7,8 +7,6 @@
 
 using namespace std;
 
-
-
 class TrieNode {
   string fullCommand;    // this is the full command it should be
   TrieNode **letters;   // array of TrieNode pointers

@@ -52,7 +52,7 @@ int main ( int argc, char* argv[]) {
   Board gameBoard1{matrix1};
   Board gameBoard2{matrix2};
   TextDisplay * ob = new TextDisplay(&gameBoard1, &gameBoard2);
-  T * iblock1 = new T;
+  I * iblock1 = new I;
   J * iblock2 = new J;
   gameBoard1.block() = iblock1;
   gameBoard2.block() = iblock2;

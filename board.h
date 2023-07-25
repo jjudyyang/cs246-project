@@ -4,6 +4,7 @@
 #include <vector>
 #include <block.h>
 #include "subject.h"
+#include "levels.h"
 
 using namespace std;
 
@@ -17,7 +18,13 @@ class Board: public Subject {
   Block *theBlock;
   int level = 0;
   int score = 0;
+
+  //fields for levesl
+  string inputSequence = "";
+  int seed = 0;
+
   vector<vector<char>> &matrix;
+ 
  public:
   explicit Board(vector<vector<char>> &matrix);
 
@@ -31,6 +38,12 @@ class Board: public Subject {
   char getState(int row, int col) const override;
   void drop();
   void lift();
+
+  //accessor method for levels
+  string getInputSequence();
+  int getSeed(); 
+
+  friend class Level;
 
   ~Board();
 };
