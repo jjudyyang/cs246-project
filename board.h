@@ -2,13 +2,14 @@
 #define BOARD_H
 #include <iostream>
 #include <vector>
-#include <block.h>
+#include "block.h"
 #include "subject.h"
+#include <string>
 
 using namespace std;
 
-class Block;
-struct Coord;
+// class Block;
+// struct Coord;
 
 const int BOARD_HEIGHT = 18;
 const int BOARD_WIDTH = 11;
@@ -30,7 +31,8 @@ class Board: public Subject {
   int getScore();
   char getState(int row, int col) const override;
   void drop();
-  void lift();
+  bool validCoords(const vector<Coord> coordList) const;
+  bool move(string movement);
 
   ~Board();
 };

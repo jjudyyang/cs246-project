@@ -45,15 +45,25 @@ char Board::getState(int row, int col) const {
 }
 
 void Board::drop() {
-    vector<Coord> blockSquares = theBlock->blockCoords();
-    for (Coord blockPos : blockSquares) {
-        matrix[blockPos.y][blockPos.x] = theBlock->blockType();
+    while (move("down")) {}
+}
+
+bool Board::validCoords(const vector<Coord> coordList) const {
+    for (Coord square : coordList) {
+        if (square.x < 0 || square.x >= BOARD_WIDTH) {
+            return false;
+        } else if (square.y < 0 || square.y >= BOARD_HEIGHT) {
+            return false;
+        } else if (matrix[square.y][square.x] != ' ') {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 
-void Board::lift() {
-    vector<Coord> blockSquares = theBlock->blockCoords();
-    for (Coord blockPos : blockSquares) {
-        matrix[blockPos.y][blockPos.x] = ' ';
+bool Board::move(string movement) {
+    if (movement == "down") {
+        
     }
 }

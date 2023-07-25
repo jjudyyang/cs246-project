@@ -1,6 +1,7 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ class Block {
       int heavy;
    public:
       Block();
+      Block(const Block &other);
       void rotateClockwise();
       void rotateCounterClockwise();
       void moveLeft();
