@@ -36,9 +36,8 @@ int main ( int argc, char* argv[]) {
   string scriptfile2 = ""; 
   int startlevel = 0;
 
-  //process Game Paramters
+  //process Game Paramters and display
   processGameParameters(argc, argv, text, seed, scriptfile1, scriptfile2, startlevel);
-  //display Game Parameters
   prettyPrintGameParameters(text, seed, scriptfile1, scriptfile2, startlevel);
 
   //create new command tree with given vector of commands
@@ -58,6 +57,8 @@ int main ( int argc, char* argv[]) {
 
       //should also output player
       cout<<"full command: "<<fullCommand<<endl; //this is feedback for the command
+
+      //send to model of MVC design pattern
 
       //update score 
       //render board from the commands
