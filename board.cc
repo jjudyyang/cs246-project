@@ -47,8 +47,6 @@ char Board::getState(int row, int col) const {
 void Board::drop() {
     vector<Coord> blockSquares = theBlock->blockCoords();
     for (Coord blockPos : blockSquares) {
-        cout << "x: " << blockPos.x << endl;
-        cout << "y: " << blockPos.y << endl;
         matrix[blockPos.y][blockPos.x] = theBlock->blockType();
     }
 }

@@ -52,22 +52,12 @@ int main ( int argc, char* argv[]) {
   Board gameBoard1{matrix1};
   Board gameBoard2{matrix2};
   TextDisplay * ob = new TextDisplay(&gameBoard1, &gameBoard2);
-  T * iblock1 = new T;
-  J * iblock2 = new J;
-  gameBoard1.block() = iblock1;
-  gameBoard2.block() = iblock2;
+  T * block1 = new T;
+  J * block2 = new J;
+  gameBoard1.block() = block1;
+  gameBoard2.block() = block2;
   gameBoard1.attach(ob);
-  gameBoard1.render();
   gameBoard2.attach(ob);
-  gameBoard1.drop();
-  gameBoard2.drop();
-  gameBoard1.render();
-  gameBoard1.lift();
-  gameBoard2.lift();
-  gameBoard1.block()->rotateClockwise();
-  gameBoard2.block()->rotateCounterClockwise();
-  gameBoard1.drop();
-  gameBoard2.drop();
   gameBoard1.render();
   TrieNode *commands = new TrieNode; //create new command tree with given vector of commands
   for(int i = 0; i < validCommands.size(); ++i){
