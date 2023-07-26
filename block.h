@@ -1,6 +1,7 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -10,13 +11,13 @@ struct Coord {
 };
 
 class Block {
-   public:
-   //protected:
+   protected:
       struct Coord pos;
       int orientation;    // 0 default, -1 for 90 deg ccw turn, +1 cw turn
       int heavy;
-   //public:
+   public:
       Block();
+      Block(const Block &other);
       void rotateClockwise();
       void rotateCounterClockwise();
       void moveLeft();

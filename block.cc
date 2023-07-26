@@ -3,6 +3,10 @@
 
 Block::Block(): pos{Coord{0, 3}}, orientation{0}, heavy{0} {}
 
+Block::Block(const Block &other):
+    pos{other.pos}, orientation{other.orientation}, heavy{other.heavy}
+    {}
+
 void Block::rotateClockwise() {
     ++orientation;
     orientation %= 4;

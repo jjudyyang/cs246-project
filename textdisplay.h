@@ -2,6 +2,7 @@
 #define TDISPLAY_H
 #include "observer.h"
 #include "board.h"
+#include "block.h"
 
 class TextDisplay: public Observer {
     Board * board1;

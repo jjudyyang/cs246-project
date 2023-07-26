@@ -5,17 +5,13 @@
 #include <vector>
 
 class Level{
+    protected: // can be accessed by derived classes
+        Board *theBoard; 
 
-    protected:
-        Board *theBoard;
-        
+            
     public:
+        // Constructor to set the boardPtr?
         virtual Block* nextBlock() const = 0;
-        mutable vector<string> input;
-
-        //function to create vector of blocks to generate
-        //must run once
-        void addToInputSequence(vector<string> &input);
 };
 class Level0: public Level{
     Block* nextBlock() const override;
@@ -32,7 +28,6 @@ class Level3: public Level{
 class Level4: public Level{
     Block* nextBlock() const override;
 };
-
 
 #endif
 
