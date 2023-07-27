@@ -1,0 +1,37 @@
+List of Commands for Reference
+
+//String of current commands
+vector<string> validCommands = {
+  "left",
+  "right",
+  "down",
+  "clockwise",
+  "counterclockwise",
+  "drop",
+  "levelup",
+  "leveldown",
+  "norandom",
+  "random",
+  "sequence",
+  "restart",
+  "hint"
+};
+
+//testing the command line interpreter 
+
+text
+seed
+scriptfile1
+scriptfiel2
+startlevel
+
+./judy text seed 100 scriptfile1 sequence1.txt scriptfile2 sequence2.txt startlevel 2 
+
+./run scriptfile1 sequence1.txt scriptfile2 sequence2.txt
+
+Game Instructions:
+text
+seed
+scriptfile1
+scriptfiel2
+startlevel
