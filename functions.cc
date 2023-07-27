@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <fstream>
 #include "functions.h"
 
 pair<int, string> seperateStringFromInt (const string &input){
@@ -18,10 +19,10 @@ pair<int, string> seperateStringFromInt (const string &input){
   return make_pair(num, str);
 }
 
-void prettyPrintGameParameters(bool text, int seed, string scriptfile1, string scriptfile2, int startlevel){
+void prettyPrintGameParameters(bool text, unsigned int seed, string scriptfile1, string scriptfile2, int startlevel){
     
     cout << "------ Game Parameters: ------\n";
-    cout << "Text Mode: " << (text ? "YES" : "NO") << "\n";
+    cout << "Text Mode Only: " << (text ? "YES" : "NO") << "\n";
     cout << "Seed: " << seed << "\n";
     cout << "Script File 1: " << scriptfile1 << "\n";
     cout << "Script File 2: " << scriptfile2 << "\n";
@@ -30,7 +31,7 @@ void prettyPrintGameParameters(bool text, int seed, string scriptfile1, string s
     cout << endl;
 }
 
-void processGameParameters(int argc, char*argv[], bool &text, int &seed, string &scriptfile1, string &scriptfile2, int &startlevel){
+void processGameParameters(int argc, char*argv[], bool &text, unsigned int &seed, string &scriptfile1, string &scriptfile2, int &startlevel){
 
     for(int i = 1; i < argc; ++i){ //skip executable
     string command = argv[i];
@@ -51,4 +52,21 @@ void processGameParameters(int argc, char*argv[], bool &text, int &seed, string 
     }
   }
 
+}
+
+vector<string> addInputSequenceToVector( string scriptfile){
+
+  //add script file to vector (for level 0)
+  vector<string> input;
+    if(scriptfile != ""){
+        ifstream MyFile{scriptfile};
+        string s;
+        while ( getline(MyFile, s) ){
+            cout<<"s: "<<s<<endl;
+            input.push_back(s);
+        }
+    }else{
+        cout<<"missing script file"<<endl;
+    }
+    return input;
 }

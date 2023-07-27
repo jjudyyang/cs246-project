@@ -1,10 +1,11 @@
 #include "board.h"
 #include "block.h"
+#include "levels.h"
 #include <vector>
 #include <fstream>
 #include <string>
 
-Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile, int startLevel): matrix{matrix}, seed{seed}, scriptFile{scriptFile}, startLevel{startLevel} {
+Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile, int startLevel, vector<string> &input): matrix{matrix}, seed{seed}, scriptFile{scriptFile}, startLevel{startLevel}, input{input} {
 
     for (int row = 0; row < BOARD_HEIGHT; row++) {
         for (int col = 0; col < BOARD_WIDTH; col++) {
@@ -34,20 +35,7 @@ Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile,
             break;
     }
 
-    //add script file to vector (for level 0)
-    if(scriptFile != ""){
-        ifstream MyFile{scriptFile};
-        string s;
-        while ( getline(MyFile, s) ){
-            input.push_back(s);
-        }
-    }else{
-        cout<<"missing script file"<<endl;
-    }
-    
 }
-
-Board::~Board() {}
 
 void Board::levelup() {
     //check range
@@ -124,29 +112,65 @@ char Board::getState(int row, int col) const {
 }
 
 void Board::drop() {
-    while (move("down")) {
-
+    while (move("down")) {}
+    vector<Coord> squares = theBlock->blockCoords();
+    char type = theBlock->blockType();
+    for (Coord square : squares) {
+        matrix[square.y][square.x] = type;
     }
 }
 
 bool Board::validCoords(const vector<Coord> coordList) const {
     for (Coord square : coordList) {
+        //cout << "\nx: " << square.x << "y: " << square.y << endl;
         if (square.x < 0 || square.x >= BOARD_WIDTH) {
             return false;
         } else if (square.y < 0 || square.y >= BOARD_HEIGHT) {
             return false;
         } else if (matrix[square.y][square.x] != ' ') {
             return false;
-        } else {
-            return true;
         }
     }
+    return true;
 }
 
+// returns false if movement is not a valid command or if the movement results 
+//   in an intersection with another block (no change to block done in this case)
 bool Board::move(string movement) {
+    // may want to change implementation to use a virtual copy constructor instead
+    //   of changing fields (reduces coupling)
+    Coord tempPos = theBlock->getPos();
+    int tempOri = theBlock->getOrientation();
+    int heaviness = theBlock->getHeavy();
+
     if (movement == "down") {
-        
+        theBlock->moveDown();
+    } else if (movement == "left") {
+        theBlock->moveLeft();
+        for (int i = 0; i < heaviness; ++i) {
+            move("down");
+        }
+    } else if (movement == "right") {
+        theBlock->moveRight();
+        for (int i = 0; i < heaviness; ++i) {
+            move("down");
+        }
+    } else if (movement == "clockwise") {
+        theBlock->rotateClockwise();
+    } else if (movement == "counterclockwise") {
+        theBlock->rotateCounterClockwise();
+    } else {
+        return false;
     }
+
+    if (validCoords(theBlock->blockCoords())) {
+        return true;
+    }
+
+    // revert movement if coordinates become invalid
+    theBlock->setPos(tempPos);
+    theBlock->setOrientation(tempOri);
+    return false;
 }
 
 // levels accessor methods 
@@ -156,8 +180,8 @@ unsigned int Board::getSeed(){
 string Board::getBlock(){
     return input[0]; // return the top 
 }
-vector<string>& Board::updateInputVector(){
+void Board::updateInputVector(){
     string top = input[0]; // save top
     input.erase(input.begin()); //remove top
-    input.push_back(top); // add beginning to back
+    input.push_back(top); // add top to back
 }

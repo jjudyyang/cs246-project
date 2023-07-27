@@ -26,6 +26,13 @@ class Block {
       void moveUp();
       virtual char blockType() const = 0;
       virtual vector<Coord> blockCoords() const = 0;
+      Coord getPos() const;
+      void setPos(Coord newPos);
+      int getOrientation() const;
+      void setOrientation(int newOri);
+      int getHeavy() const;
+      void setHeavy(int newHeaviness);
+
 };
 
 class I : public Block {
