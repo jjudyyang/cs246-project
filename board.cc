@@ -114,7 +114,9 @@ char Board::getState(int row, int col) const {
 }
 
 void Board::drop() {
-    while (move("down")) {}
+    while (move("down")) {
+
+    }
 }
 
 bool Board::validCoords(const vector<Coord> coordList) const {
