@@ -11,9 +11,9 @@ using namespace std;
 //all of the functions used by main
 
 pair<int, string> seperateStringFromInt (const string &input);
-void prettyPrintGameParameters(bool text, int seed, string scriptfile1, string scriptfile2, int startlevel);
-void processGameParameters(int argc, char*argv[], bool &text, int &seed, string &scriptfile1, string &scriptfile2, int &startlevel);
-
+void prettyPrintGameParameters(bool text, unsigned int seed, string scriptfile1, string scriptfile2, int startlevel);
+void processGameParameters(int argc, char*argv[], bool &text, unsigned int &seed, string &scriptfile1, string &scriptfile2, int &startlevel);
+vector<string> addInputSequenceToVector( string scriptfile);
 
 
 #endif

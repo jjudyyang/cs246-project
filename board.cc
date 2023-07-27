@@ -1,10 +1,11 @@
 #include "board.h"
 #include "block.h"
+#include "levels.h"
 #include <vector>
 #include <fstream>
 #include <string>
 
-Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile, int startLevel): matrix{matrix}, seed{seed}, scriptFile{scriptFile}, startLevel{startLevel} {
+Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile, int startLevel, vector<string> &input): matrix{matrix}, seed{seed}, scriptFile{scriptFile}, startLevel{startLevel}, input{input} {
 
     for (int row = 0; row < BOARD_HEIGHT; row++) {
         for (int col = 0; col < BOARD_WIDTH; col++) {
@@ -34,17 +35,6 @@ Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile,
             break;
     }
 
-    //add script file to vector (for level 0)
-    if(scriptFile != ""){
-        ifstream MyFile{scriptFile};
-        string s;
-        while ( getline(MyFile, s) ){
-            input.push_back(s);
-        }
-    }else{
-        cout<<"missing script file"<<endl;
-    }
-    
 }
 
 Board::~Board() {}
@@ -139,12 +129,14 @@ bool Board::validCoords(const vector<Coord> coordList) const {
             return true;
         }
     }
+    return true; //for testing
 }
 
 bool Board::move(string movement) {
-    if (movement == "down") {
+    // if (movement == "down") {
         
-    }
+    // }
+    return true; //for testing
 }
 
 // levels accessor methods 
@@ -157,5 +149,5 @@ string Board::getBlock(){
 vector<string>& Board::updateInputVector(){
     string top = input[0]; // save top
     input.erase(input.begin()); //remove top
-    input.push_back(top); // add beginning to back
+    input.push_back(top); // add top to back
 }

@@ -4,13 +4,13 @@
 #include "board.h"
 #include <vector>
 
+class Board;
+//^forwarding dependancies 
+
 class Level{
     protected: // can be accessed by derived classes
         Board *theBoard; 
-
-            
     public:
-        // Constructor to set the boardPtr?
         virtual Block* nextBlock() const = 0;
 };
 class Level0: public Level{

@@ -7,11 +7,7 @@
 
 Block* Level0::nextBlock() const{
     
-    // string block =  theBoard->getVector()[0];
-    // theBoard->getVector().erase(theBoard->getVector().begin());
-    // theBoard->getVector()[0](block);
-    //^^ this is silly 
-
+    //top of input vector
     string block = theBoard->getBlock();
 
     if(block == "I"){
@@ -37,12 +33,14 @@ Block* Level0::nextBlock() const{
         return nextBlock;  
     }
 
-    //call function to update the input vector
+    //update the input vector
     theBoard->updateInputVector();
 }
+
+//S and Z are selected with 1/12 
+//remaining are selected with 1/6
 Block* Level1::nextBlock() const{
-    //S and Z are selected with 1/12 
-    //remaining are selected with 1/6
+    
     int random = 0;
     if(theBoard->getSeed() != 0){ // seed is present 
         srand(theBoard->getSeed());
@@ -77,8 +75,9 @@ Block* Level1::nextBlock() const{
     }
 }
 
+//all blocks selected with equal probability 
 Block* Level2::nextBlock() const{
-    //all blocks selected with equal probability 
+    
     if(theBoard->getSeed() != 0){ // seed is present 
         srand(theBoard->getSeed());
     }
