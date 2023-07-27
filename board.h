@@ -4,7 +4,7 @@
 #include <vector>
 #include "block.h"
 #include "subject.h"
-#include <string>
+#include "levels.h"
 
 using namespace std;
 
@@ -15,12 +15,24 @@ const int BOARD_HEIGHT = 18;
 const int BOARD_WIDTH = 11;
 
 class Board: public Subject {
+
   Block *theBlock;
-  int level = 0;
+  Level *theLevel; 
+  int currentLevel = 0;
+
   int score = 0;
+
   vector<vector<char>> &matrix;
+  unsigned int seed; //unsigned int required for rand function 
+
+  string scriptFile; //used in the constructor  
+  int startLevel;
+  vector<string> &input; //vector for sequence files
+
  public:
-  explicit Board(vector<vector<char>> &matrix);
+  
+  //explicit Board(vector<vector<char>> &matrix);
+  explicit Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile, int startLevel);
 
   Block *&block() { return theBlock; }
   void levelup();
@@ -31,8 +43,12 @@ class Board: public Subject {
   int getScore();
   char getState(int row, int col) const override;
   void drop();
-  bool validCoords(const vector<Coord> coordList) const;
-  bool move(string movement);
+  void lift();
+
+  //for levels
+  unsigned int getSeed();
+  string getBlock();
+  vector<string> &updateInputVector();
 
   ~Board();
 };
