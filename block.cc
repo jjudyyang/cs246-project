@@ -21,37 +21,41 @@ void Block::rotateCounterClockwise() {
 }
 
 void Block::moveLeft() {
-    if (pos.x <= 0) {
-        return;
-    }
     --pos.x;
-    for (int i = 0; i < heavy; i++) {
-        moveDown();
-    }
 }
 
 void Block::moveRight() {
-    if (pos.x >= BOARD_WIDTH - 1) {
-        return;
-    }
     ++pos.x;
-    for (int i = 0; i < heavy; i++) {
-        moveDown();
-    }
 }
 
 void Block::moveDown() {
-    if (pos.y >= BOARD_HEIGHT - 1) {
-        return;
-    }
     ++pos.y;
 }
 
 void Block::moveUp() {
-    if (pos.y <= 0) {
-        return;
-    }
     --pos.y;
+}
+
+Coord Block::getPos() const {
+    return pos;
+}
+void Block::setPos(Coord newPos) {
+    pos = newPos;
+}
+int Block::getOrientation() const {
+    return orientation;
+}
+
+void Block::setOrientation(int newOri) {
+    orientation = newOri;
+}
+
+int Block::getHeavy() const {
+    return heavy;
+}
+
+void Block::setHeavy(int newHeaviness) {
+    heavy = newHeaviness;
 }
 
 char I::blockType() const {
