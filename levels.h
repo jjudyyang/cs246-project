@@ -5,28 +5,24 @@
 #include <vector>
 #include <string>
 
-//^forwarding dependancies 
-
 class Level{
-    // protected: // can be accessed by derived classes
-    //     Board *theBoard;
     public:
-        virtual Block* nextBlock() const = 0;
+        virtual Block* nextBlock(unsigned int seed, vector<string> &input) const = 0;
 };
 class Level0: public Level{
-    Block* nextBlock() const override;
+    Block* nextBlock(unsigned int seed, vector<string> &input) const override;
 };
 class Level1: public Level{
-    Block* nextBlock() const override;
+    Block* nextBlock(unsigned int seed, vector<string> &input) const override;
 };
 class Level2: public Level{
-    Block* nextBlock() const override;
+    Block* nextBlock(unsigned int seed, vector<string> &input) const override;
 };
 class Level3: public Level{
-    Block* nextBlock() const override;
+    Block* nextBlock(unsigned int seed, vector<string> &input) const override;
 };
 class Level4: public Level{
-    Block* nextBlock() const override;
+    Block* nextBlock(unsigned int seed, vector<string> &input) const override;
 };
 
 #endif

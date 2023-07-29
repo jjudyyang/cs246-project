@@ -52,10 +52,6 @@ class Board: public Subject {
   bool validCoords(const vector<Coord> coordList) const;
   bool move(string movement);
 
-  //for levels
-  unsigned int getSeed();
-  string getBlock();
-  void updateInputVector();
 };
 
 #endif

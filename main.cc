@@ -48,6 +48,6 @@ int main ( int argc, char* argv[]) {
   //   cout << "x: " << square.x << "y: " << square.y;
   // }
 
-  gameController( argc, argv);
+  gameController( argc, argv );
 
   }

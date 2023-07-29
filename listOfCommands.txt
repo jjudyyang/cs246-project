@@ -25,7 +25,7 @@ scriptfile1
 scriptfiel2
 startlevel
 
-./judy text seed 100 scriptfile1 sequence1.txt scriptfile2 sequence2.txt startlevel 2 
+./run text seed 100 scriptfile1 sequence1.txt scriptfile2 sequence2.txt startlevel 2 
 
 ./run scriptfile1 sequence1.txt scriptfile2 sequence2.txt
 

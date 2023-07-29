@@ -12,11 +12,10 @@ Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile,
             matrix[row][col] = ' ';
         }
     }
-
     //update current level
     currentLevel = startLevel; 
 
-    //update pointer to start level (intially constructed with start level)
+    //update pointer to start level (intially constructed with startlevel)
     switch(startLevel){
         case 0:
             theLevel = new Level0;
@@ -33,6 +32,10 @@ Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile,
         case 4:
             theLevel = new Level4;
             break;
+    }
+
+    if( seed != 0){
+        srand(seed); //only need to seed once
     }
 
 }
@@ -173,15 +176,15 @@ bool Board::move(string movement) {
     return false;
 }
 
-// levels accessor methods 
-unsigned int Board::getSeed(){
-    return seed;
-} 
-string Board::getBlock(){
-    return input[0]; // return the top 
-}
-void Board::updateInputVector(){
-    string top = input[0]; // save top
-    input.erase(input.begin()); //remove top
-    input.push_back(top); // add top to back
-}
+// // levels accessor methods 
+// unsigned int Board::getSeed(){
+//     return seed;
+// } 
+// string Board::getBlock(){
+//     return input[0]; // return the top 
+// }
+// void Board::updateInputVector(){
+//     string top = input[0]; // save top
+//     input.erase(input.begin()); //remove top
+//     input.push_back(top); // add top to back
+// }

@@ -82,7 +82,7 @@ void processGameParameters(int argc, char*argv[], bool &text, unsigned int &seed
 
 }
 
-vector<string> addInputSequenceToVector( string scriptfile){
+vector<string> addInputSequenceToVector( string scriptfile ){
 
   //add script file to vector (for level 0)
   vector<string> input;
@@ -90,8 +90,12 @@ vector<string> addInputSequenceToVector( string scriptfile){
         ifstream MyFile{scriptfile};
         string s;
         while ( getline(MyFile, s) ){
-            cout<<"s: "<<s<<endl;
-            input.push_back(s);
+            stringstream letter{s};
+            string blockLetter;
+            while(letter >> blockLetter){
+              //cout<<"s: "<<blockLetter<<endl;
+              input.push_back(blockLetter);
+            }
         }
     }else{
         cout<<"missing script file"<<endl;
@@ -113,6 +117,17 @@ void setLevel(Board &board, int level){
   }
 }
 
+//do the prefixing
+void multiplierPrefix(int prefix, Board &board, string command){
+  if(prefix != 0){
+    for(int i = 0; i < prefix; i++){
+      processCommand(board, command); 
+    }
+  }else{
+    processCommand(board, command); 
+  }
+}
+
 //main game controller 
 void gameController( int argc, char* argv[] ){
 
@@ -131,6 +146,15 @@ void gameController( int argc, char* argv[] ){
   vector<string> input1 = addInputSequenceToVector(scriptfile1);
   vector<string> input2 = addInputSequenceToVector(scriptfile2);
 
+  for(int i = 0; i < input1.size(); i++){
+    cout<<input1[i]<<" ";
+  }
+  cout<<endl;
+  for(int i = 0; i < input2.size(); i++){
+    cout<<input2[i]<<" ";
+  }
+  cout<<endl;
+  
   //create board vector and board
   vector<vector<char>> matrix1(ROWS, vector<char>(COLS));
   vector<vector<char>> matrix2(ROWS, vector<char>(COLS));
@@ -146,12 +170,13 @@ void gameController( int argc, char* argv[] ){
     commands->insert(validCommands[i]); //add each command to tree
   }
 
+
 //adding first block to board based on level
 setLevel(gameBoard1, gameBoard1.getLevel()); 
 setLevel(gameBoard2, gameBoard2.getLevel());
 
-  gameBoard1.block() = gameBoard1.theLevel->nextBlock();
-  gameBoard2.block() = gameBoard2.theLevel->nextBlock();
+  gameBoard1.block() = gameBoard1.theLevel->nextBlock(seed ,input1);
+  gameBoard2.block() = gameBoard2.theLevel->nextBlock(seed ,input2);
   gameBoard1.attach(ob); 
   gameBoard2.attach(ob);
 
@@ -165,30 +190,32 @@ setLevel(gameBoard2, gameBoard2.getLevel());
 
       auto result = seperateStringFromInt(input);
       string fullCommand = commands->search(result.second);
-      cout<<"input: "<<fullCommand<<endl; //this is feedback for the command
+      int prefix = result.first;
+      
+      //command interpreters response
+      cout<<"prefix: "<<prefix<<endl;
+      cout<<"input: "<<fullCommand<<endl; 
 
       if(fullCommand != "ERROR: command does not exist" && fullCommand != "MUTIPLE"){
         //valid command, process the command
-        if(currentPlayer % 2 == 0){
-          processCommand(gameBoard1, fullCommand); 
-        }else{
-          processCommand(gameBoard2, fullCommand); 
+        if(currentPlayer % 2 == 0){ //player1
+          multiplierPrefix(prefix, gameBoard1, fullCommand);
+        }else{ //player2
+          multiplierPrefix(prefix, gameBoard2, fullCommand); 
         }
 
         if(fullCommand == "drop"){
           //generate block for next board
           if(currentPlayer % 2 == 0){
-            gameBoard1.block() = gameBoard1.theLevel->nextBlock();
+            gameBoard1.block() = gameBoard1.theLevel->nextBlock(seed,input1);
           }else{
-            gameBoard2.block() = gameBoard2.theLevel->nextBlock();
+            gameBoard2.block() = gameBoard2.theLevel->nextBlock(seed,input2);
           }
-          //switch players 
-          currentPlayer++;
+          currentPlayer++; //switch players 
         }
-        gameBoard1.render(); //only render after sucessfull command
+        gameBoard1.render(); //only render after sucessful command
       }
   }
-
   delete commands;
 }
 
@@ -218,7 +245,7 @@ void processCommand(Board &board, string c){
   }else if( c == "random"){
     
   }else if( c == "sequence"){
-    
+  
   }else if( c == "restart"){
 
   }else if( c == "hint"){

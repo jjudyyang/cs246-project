@@ -5,18 +5,11 @@
 #include <cstdlib>
 #include <vector>
 
-Block* Level0::nextBlock() const{
-    cout<<"level 0"<<endl;
+Block* Level0::nextBlock(unsigned int seed, vector<string> &input) const{
     
-    //top of input vector
-
-    //NEED TO ACCESS THIS SILLY VECTOR!
-    //string block = theBoard->getBlock();
-    //update the input vector
-    // theBoard->updateInputVector();
-
-    string block = "I";
-    cout<<"block: "<<block<<endl;
+    string block = input[0];
+    input.erase(input.begin());
+    input.push_back(block);
 
     if(block == "I"){
         I * nextBlock = new I;
@@ -40,17 +33,12 @@ Block* Level0::nextBlock() const{
         S * nextBlock = new S;
         return nextBlock;  
     }
-
-    
 }
 
 //S and Z are selected with 1/12 
 //remaining are selected with 1/6
-Block* Level1::nextBlock() const{
+Block* Level1::nextBlock(unsigned int seed, vector<string> &input) const{
     
-    // if(theBoard->getSeed() != 0){ // seed is present 
-    //     srand(theBoard->getSeed());
-    // }
     int random = rand() % 6;
 
     if(random == 0){
@@ -82,12 +70,9 @@ Block* Level1::nextBlock() const{
 }
 
 //all blocks selected with equal probability 
-Block* Level2::nextBlock() const{
+Block* Level2::nextBlock(unsigned int seed, vector<string> &input) const{
     
-    // if(theBoard->getSeed() != 0){ // seed is present 
-    //     srand(theBoard->getSeed());
-    // }
-    int random = rand() % 6;
+    int random = rand() % 7;
 
     if(random == 0){
         I * nextBlock = new I;
@@ -113,10 +98,8 @@ Block* Level2::nextBlock() const{
     }
 }
 
-Block* Level3::nextBlock() const{
-    // if(theBoard->getSeed() != 0){
-    //     srand(theBoard->getSeed());
-    // }
+Block* Level3::nextBlock(unsigned int seed, vector<string> &input) const{
+
     int random = rand() % 9;
 
     if(random == 0){
@@ -143,9 +126,8 @@ Block* Level3::nextBlock() const{
     } 
 
 }
-Block* Level4::nextBlock() const{
+Block* Level4::nextBlock(unsigned int seed, vector<string> &input) const{
     //if mutiples of 5 blocks places without clearing
     //1x1 (*) is placed in the center of the board 
 
-    
 }
