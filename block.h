@@ -17,7 +17,7 @@ class Block {
       int heavy;
       int level;
    public:
-      Block();
+      Block(int level = 0);
       Block(const Block &other);
       void rotateClockwise();
       void rotateCounterClockwise();
@@ -33,7 +33,8 @@ class Block {
       void setOrientation(int newOri);
       int getHeavy() const;
       void setHeavy(int newHeaviness);
-
+      int getLevel() const;
+      void setLevel(int newLevel);
 };
 
 class I : public Block {

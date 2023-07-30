@@ -1,21 +1,27 @@
-#include "block.cc"
+#ifndef SCORE_H
+#define SCORE_H
+#include "block.h"
 #include "observer.h"
 
-class placedBlock() {
-    vector<vector<Coord>> squareList;
+using namespace std;
+
+class placedBlock {
+    vector<Coord> squareList;
     int level;
 
     public:
-        placedBlock(Vector<Coord> coords, int level);
-        int deleteSquares(int line);
+        placedBlock(vector<Coord>& coords, int level);
+        void deleteSquares(int line);
         bool isEmpty();
         int score();
 };
 
-class blockPile () {
+class blockPile {
     vector<placedBlock> blockList;
 
     public:
-        void addBlock(Vector<Coord> newCoords, int newlevel);
+        void addBlock(vector<Coord>& newCoords, int newLevel);
         int scoreLine(int line);
+        int size() const;
 };
+#endif

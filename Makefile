@@ -4,7 +4,7 @@ CXX = g++					# compiler
 CXXFLAGS = -g -Wall -MMD -Werror=vla -std=c++20 			# compiler flags
 MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
 
-OBJECTS = functions.o commandInterpreter.o levels.o board.o block.o subject.o textdisplay.o main.o 			# object files forming executable
+OBJECTS = functions.o commandInterpreter.o levels.o board.o block.o subject.o textdisplay.o main.o score.o 			# object files forming executable
 DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"
 EXEC = run				# executable name
 

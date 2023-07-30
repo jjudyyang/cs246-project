@@ -1,1 +1,1 @@
-block.o: block.cc block.h board.h subject.h levels.h
+block.o: block.cc block.h board.h subject.h levels.h score.h observer.h

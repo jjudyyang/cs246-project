@@ -5,7 +5,8 @@
 #include <fstream>
 #include <string>
 
-Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile, int startLevel, vector<string> &input): matrix{matrix}, seed{seed}, scriptFile{scriptFile}, startLevel{startLevel}, input{input} {
+Board::Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile, int startLevel, vector<string> &input): 
+    matrix{matrix}, pile{make_unique<blockPile>()}, seed{seed}, scriptFile{scriptFile}, startLevel{startLevel}, input{input} {
 
     for (int row = 0; row < BOARD_HEIGHT; row++) {
         for (int col = 0; col < BOARD_WIDTH; col++) {
@@ -114,10 +115,12 @@ char Board::getState(int row, int col) const {
 void Board::drop() {
     while (move("down")) {}
     vector<Coord> squares = theBlock->blockCoords();
+    vector<Coord> &squareRef = squares;
     char type = theBlock->blockType();
-    for (Coord square : squares) {
+    for (Coord square : squareRef) {
         matrix[square.y][square.x] = type;
     }
+    pile->addBlock(squareRef, theBlock->getLevel());
 }
 
 bool Board::validCoords(const vector<Coord> coordList) const {
@@ -184,4 +187,31 @@ void Board::updateInputVector(){
     string top = input[0]; // save top
     input.erase(input.begin()); //remove top
     input.push_back(top); // add top to back
+}
+
+int Board::lineScore() const {
+    return (currentLevel + 1) * (currentLevel + 1);
+}
+
+// clears all filled lines and updates score accordingly
+bool Board::clearFullLines() {
+    bool lineCleared = false;
+    for (int i = 0; i < BOARD_HEIGHT; ++i) {
+        bool lineFull = true;
+        for (int j = 0; j < BOARD_WIDTH; ++j) {
+            if (matrix[i][j] == ' ') {
+                lineFull = false;
+                break;
+            }
+        }
+        if (lineFull) {
+            score += pile->scoreLine(i);
+            score += lineScore();
+            matrix.erase(matrix.begin() + i);
+            vector<char> emptyLine(BOARD_WIDTH, ' ');
+            matrix.insert(matrix.begin(), emptyLine);
+            lineCleared = true;
+        }
+    }
+    return lineCleared;
 }

@@ -1,10 +1,10 @@
 #include "block.h"
 #include "board.h"
 
-Block::Block(): pos{Coord{0, 3}}, orientation{0}, heavy{0} {}
+Block::Block(int level): pos{Coord{0, 3}}, orientation{0}, heavy{0}, level{level} {}
 
 Block::Block(const Block &other):
-    pos{other.pos}, orientation{other.orientation}, heavy{other.heavy}
+    pos{other.pos}, orientation{other.orientation}, heavy{other.heavy}, level{other.level}
     {}
 
 void Block::rotateClockwise() {
@@ -56,6 +56,14 @@ int Block::getHeavy() const {
 
 void Block::setHeavy(int newHeaviness) {
     heavy = newHeaviness;
+}
+
+int Block::getLevel() const {
+    return level;
+}
+
+void Block::setLevel(int newLevel) {
+    level = newLevel;
 }
 
 char I::blockType() const {
