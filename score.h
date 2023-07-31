@@ -1,7 +1,6 @@
 #ifndef SCORE_H
 #define SCORE_H
 #include "block.h"
-#include "observer.h"
 
 using namespace std;
 

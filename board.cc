@@ -195,6 +195,7 @@ int Board::lineScore() const {
 
 // clears all filled lines and updates score accordingly
 bool Board::clearFullLines() {
+    int numCleared = 0;
     bool lineCleared = false;
     for (int i = 0; i < BOARD_HEIGHT; ++i) {
         bool lineFull = true;
@@ -211,7 +212,8 @@ bool Board::clearFullLines() {
             vector<char> emptyLine(BOARD_WIDTH, ' ');
             matrix.insert(matrix.begin(), emptyLine);
             lineCleared = true;
+            ++numCleared;
         }
     }
-    return lineCleared;
+    return numCleared;
 }
