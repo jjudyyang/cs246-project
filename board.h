@@ -5,6 +5,8 @@
 #include "block.h"
 #include "subject.h"
 #include "levels.h"
+#include "score.h"
+#include <memory>
 
 using namespace std;
 
@@ -14,31 +16,33 @@ using namespace std;
 class Level; // Forward declaration of the Level class
 //^^ tells compiler that levels exist without providing full defination
 
+class blockPile; // Forward declaration
+
 const int BOARD_HEIGHT = 18;
 const int BOARD_WIDTH = 11;
 
-class Board: public Subject {
+class Board : public Subject
+{
 
-  public: //! this might be problem 
   Block *theBlock;
-  Level *theLevel; 
+  Level *theLevel;
   int currentLevel = 0;
 
   int score = 0;
 
   vector<vector<char>> &matrix;
-  unsigned int seed; //unsigned int required for rand() function 
+  unique_ptr<blockPile> pile;
+  unsigned int seed; // unsigned int required for rand() function
 
-  string scriptFile; //used in the constructor  
-  int startLevel; //TODO, COMBINE WITH OTHER LEVEL VARIABLE TO REMOVE DEPENDANCY
-  vector<string> &input; //vector for sequence files
+  string scriptFile;     // used in the constructor
+  int startLevel;        // TODO, COMBINE WITH OTHER LEVEL VARIABLE TO REMOVE DEPENDANCY
+  vector<string> &input; // vector for sequence files
 
  public:
-  
-  //explicit Board(vector<vector<char>> &matrix);
+  // explicit Board(vector<vector<char>> &matrix);
   explicit Board(vector<vector<char>> &matrix, unsigned int seed, string scriptFile, int startLevel, vector<string> &input);
 
-  Block *&block() { return theBlock; } //copy ctor
+  Block *&block() { return theBlock; } // copy ctor
   void levelup();
   void leveldown();
   void restart();
@@ -51,7 +55,13 @@ class Board: public Subject {
   void drop();
   bool validCoords(const vector<Coord> coordList) const;
   bool move(string movement);
+  int lineScore() const;
+  bool clearFullLines();
 
+  // for levels
+  unsigned int getSeed();
+  string getBlock();
+  void updateInputVector();
 };
 
 #endif

@@ -15,8 +15,9 @@ class Block {
       struct Coord pos;
       int orientation;    // 0 default, -1 for 90 deg ccw turn, +1 cw turn
       int heavy;
+      int level;
    public:
-      Block();
+      Block(int level = 0);
       Block(const Block &other);
       void rotateClockwise();
       void rotateCounterClockwise();
@@ -32,7 +33,8 @@ class Block {
       void setOrientation(int newOri);
       int getHeavy() const;
       void setHeavy(int newHeaviness);
-
+      int getLevel() const;
+      void setLevel(int newLevel);
 };
 
 class I : public Block {
