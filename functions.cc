@@ -29,9 +29,9 @@ vector<string> validCommands = {
   "norandom",
   "random",
   "sequence",
-  "restart",
-  "hint"
+  "restart"
 };
+//note: tri node does not work with single letters 
 
 pair<int, string> seperateStringFromInt (const string &input){
   stringstream ss(input);
@@ -98,7 +98,7 @@ vector<string> addInputSequenceToVector( string scriptfile ){
             }
         }
     }else{
-        cout<<"missing script file"<<endl;
+      cout<<"missing script file"<<endl;
     }
     return input;
 }
@@ -154,13 +154,15 @@ void gameController( int argc, char* argv[] ){
     cout<<input2[i]<<" ";
   }
   cout<<endl;
-  
+
   //create board vector and board
   vector<vector<char>> matrix1(ROWS, vector<char>(COLS));
   vector<vector<char>> matrix2(ROWS, vector<char>(COLS));
+
+  restart:
   Board gameBoard1{matrix1, seed, scriptfile1, startLevel, input1 };
   Board gameBoard2{matrix2, seed, scriptfile2, startLevel, input2 };
-
+  
   //display
   TextDisplay * ob = new TextDisplay(&gameBoard1, &gameBoard2);
 
@@ -170,22 +172,24 @@ void gameController( int argc, char* argv[] ){
     commands->insert(validCommands[i]); //add each command to tree
   }
 
-
 //adding first block to board based on level
 setLevel(gameBoard1, gameBoard1.getLevel()); 
 setLevel(gameBoard2, gameBoard2.getLevel());
 
-  gameBoard1.block() = gameBoard1.theLevel->nextBlock(seed ,input1);
-  gameBoard2.block() = gameBoard2.theLevel->nextBlock(seed ,input2);
+  gameBoard1.block() = gameBoard1.theLevel->nextBlock(input1);
+  gameBoard2.block() = gameBoard2.theLevel->nextBlock(input2);
   gameBoard1.attach(ob); 
   gameBoard2.attach(ob);
 
   gameBoard1.render(); //renders empty board
-
   cout<<"begin inputting commands!"<<endl;
   
   int currentPlayer = 0;
   string input;
+
+  ifstream sequenceFile;
+  sequence:
+
   while( getline (cin, input) ){
 
       auto result = seperateStringFromInt(input);
@@ -196,31 +200,89 @@ setLevel(gameBoard2, gameBoard2.getLevel());
       cout<<"prefix: "<<prefix<<endl;
       cout<<"input: "<<fullCommand<<endl; 
 
-      if(fullCommand != "ERROR: command does not exist" && fullCommand != "MUTIPLE"){
-        //valid command, process the command
-        if(currentPlayer % 2 == 0){ //player1
-          multiplierPrefix(prefix, gameBoard1, fullCommand);
-        }else{ //player2
-          multiplierPrefix(prefix, gameBoard2, fullCommand); 
-        }
+      if (fullCommand == "restart"){
+        goto restart;
+      }
+      if(fullCommand == "norandom"){ //make both boards take input from one file
+        cout<<"";
+      }
+      if(fullCommand == "random"){ //toggle the randomness off
 
-        if(fullCommand == "drop"){
-          //generate block for next board
+      }
+      if(fullCommand == "sequence"){
+        string fileName;
+        cout<<"enter sequence file to execute commands from: "; 
+        cin>>fileName;
+        sequenceFile.open(fileName.c_str());
+        if (!sequenceFile.is_open())
+          cout << "Failed to open the file." << endl;
+        
+        cin.rdbuf(sequenceFile.rdbuf());//change cin to read from this file
+        goto sequence; //go to start of while loop to read file
+      }
+
+      //helper function to process commands
+      if(fullCommand != "ERROR: command does not exist" && fullCommand != "MUTIPLE"){
+          //valid move command
+          if(currentPlayer % 2 == 0){ //player1
+            multiplierPrefix(prefix, gameBoard1, fullCommand);
+          }else{ //player2
+            multiplierPrefix(prefix, gameBoard2, fullCommand); 
+          }
+
+        //check if block was dropped
+        if(fullCommand == "drop"){ //generate block for next board
           if(currentPlayer % 2 == 0){
-            gameBoard1.block() = gameBoard1.theLevel->nextBlock(seed,input1);
+            gameBoard1.block() = gameBoard1.theLevel->nextBlock(input1);
           }else{
-            gameBoard2.block() = gameBoard2.theLevel->nextBlock(seed,input2);
+            gameBoard2.block() = gameBoard2.theLevel->nextBlock(input2);
           }
           currentPlayer++; //switch players 
+          // if special actions triggered
+          if( false ){ //condition: two or more lines cleared
+            specialAction (currentPlayer, gameBoard1, gameBoard2);
+          }
         }
+
         gameBoard1.render(); //only render after sucessful command
       }
   }
+
   delete commands;
 }
 
+void specialAction (int currentPlayer, Board &gameBoard1, Board &gameBoard2){
+  gameBoard1.render(); //renders the drop
+  int selection;
+  string forceBlock;
+  cout<<"*** Special Actions Trigger ***"<<endl;
+  cout<<"select from the following: "<<endl;
+  cout<<"1: blind"<<endl<<"2: heavy"<<endl<<"3: force"<<endl;
+  cin>>selection;
+
+  if(selection == 3){
+    cout<<"Enter block to drop (I, J, L, O, Z, T, S): ";
+    cin>>forceBlock;
+  }
+
+  //execute the commands
+  if(selection == 1){
+              
+  }
+  else if(selection == 2){
+    if(currentPlayer % 2 == 0) gameBoard1.block()->setHeavy(2);
+    else gameBoard2.block()->setHeavy(2);
+  }
+  else if(selection == 3){
+    if(currentPlayer % 2 == 0) gameBoard1.block() = gameBoard1.theLevel->nextBlock(forceBlock);
+    else gameBoard2.block() = gameBoard2.theLevel->nextBlock(forceBlock);
+  }
+  else{
+    cout<<"invalid command"<<endl;
+  }
+}
+
 void processCommand(Board &board, string c){
-  //thanks david for writing move :-)
   if( c == "left" ){
     board.move("left");
   }else if( c == "right"){
@@ -240,18 +302,7 @@ void processCommand(Board &board, string c){
   }
   else if( c == "down" ){
     board.move("down");
-  }else if( c == "norandom"){
-    
-  }else if( c == "random"){
-    
-  }else if( c == "sequence"){
-  
-  }else if( c == "restart"){
-
-  }else if( c == "hint"){
-
   }else{
-    cout<<"quit command loop"<<endl;
+    cout<<"quit command loop"<<endl; //should not get to here
   }
-
 }

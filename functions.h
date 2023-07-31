@@ -20,5 +20,6 @@ void gameController( int argc, char* argv[]);
 void processCommand(Board &board, string c);
 void setLevel(Board &board, int level);
 void multiplierPrefix(int prefix, Board &board, string command);
+void specialAction (int currentPlayer, Board &gameBoard1, Board &gameBoard2);
 
 #endif
